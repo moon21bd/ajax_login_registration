@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<title>Login and Registration with AJAX and PHP</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<head>
+
+    <script src="public/js/jquery-3.5.1.min.js"></script>
+    <!---- jquery link local dont forget to place this in first than other script or link or may not work ---->
+
+    <link rel="stylesheet" href="public/css/bootstrap.min.css">
+    <!---- boostrap.min link local ----->
+
+    <link rel="stylesheet" href="public/css/style.css">
+    <!---- custom stylesheet link local ----->
+
+    <script src="public/js/bootstrap.min.js"></script>
+    <!---- Boostrap js link local ----->
+
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <!---- Font awesom link local ----->
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="container">
+        <h1 class="text-center" id="title">TechnoGenius</h1>
+        <h2 class="text-center" id="title">Login & Registration with AJAX and PHP</h2>
+        <p class="text-center">
+            <small id="passwordHelpInline" class="text-muted"> Developer : <a
+                    href="https://facebook.com/frdsmn">Raqibul Hasan</a>
+            </small>
+        </p>
+        <hr>
+        <div class="row">
+            <div class="col-md-5">
+                <form id="registration_form" role="form">
+                    <fieldset>
+                        <p class="text-uppercase pull-center"> SIGN UP / REGISTRATION</p>
+                        <div class="form-group">
+                            <input type="text" name="username" id="username" class="form-control input-lg"
+                                   placeholder="Enter your username.">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" name="email" id="email" class="form-control input-lg"
+                                   placeholder="Enter your email.">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" id="password" class="form-control input-lg"
+                                   placeholder="Enter your password.">
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input">
+                                By Clicking register you're agree to our policy & terms
+                            </label>
+                        </div>
+                        <div>
+                            <input type="button" id="register_btn" class="btn btn-lg btn-primary" value="Register">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="col-md-2">
+                <!-------null------>
+            </div>
+
+            <div class="col-md-5">
+                <form id="login_form" role="form">
+                    <fieldset>
+                        <p class="text-uppercase"> Login using your account: </p>
+
+                        <div class="form-group">
+                            <input type="text" name="username" id="login_username" class="form-control input-lg"
+                                   placeholder="Enter username or email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" id="login_password" class="form-control input-lg"
+                                   placeholder="Enter password">
+                        </div>
+                        <div>
+                            <input type="button" id="login_btn" class="btn btn-md" value="Sign In">
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <p class="text-center">
+        <small id="passwordHelpInline" class="text-muted"> Developed by : <a href="https://facebook.com/TechnoGeniuss">
+            Team TechnoGenius</a></small>
+    </p>
+</div>
+
+<script type="application/javascript">
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        console.log('DOM fully loaded and parsed');
+
+        $("#login_btn").on("click", function (event) {
+            event.preventDefault();
+            let login_user = $('#login_username').val();
+            let login_password = $('#login_password').val();
+
+            console.log('login_user ', login_user);
+            console.log('login_password ', login_password);
+
+            console.log('login button clicked');
+            $.ajax({
+                url: "webservice/ajax_login.php",
+                data: {
+                    username: login_user,
+                    password: login_password,
+                },
+                method: "POST",
+                dataType: "json",
+                success: function (response) {
+                    if (response.status == 1) {
+                        location.replace('dashboard.php');
+                        return false;
+                    } else {
+                        alert(response.msg);
+                        $('#login_form').trigger("reset");
+                    }
+                }
+            });
+        });
+
+        // registration btn action start
+        $("#register_btn").on("click", function (event) {
+            event.preventDefault();
+
+            let username = $("#username").val();
+            let email = $("#email").val();
+            let password = $("#password").val();
+
+            console.log('username ', username);
+            console.log('email ', email);
+            console.log('password ', password);
+
+            $.ajax({
+                url: "webservice/ajax_registration.php",
+                data: {
+                    username: username,
+                    email: email,
+                    password: password,
+                },
+                method: "POST",
+                dataType: "json",
+                success: function (response) {
+                    if (response.status == 1) { // success msg goes here.
+                        alert(response.msg);
+                        location.reload();
+                    } else { // error msg goes here.
+                        alert(response.msg);
+                        location.reload();
+                    }
+                }
+            });
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
