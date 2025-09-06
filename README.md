@@ -1,4 +1,2 @@
 # ajax_login_registration
-AJAX Login And Registration by TechnoGenius টেকনোজিনিয়াস YouTube Channel
-
-Subscribe us at http://www.youtube.com/channel/UCSml-RnMng1bx8mHhVY-eKg
+AJAX Login And Registration for TechnoGenius টেকনোজিনিয়াস YouTube Channel [Deleted]
